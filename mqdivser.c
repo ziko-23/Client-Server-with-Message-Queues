@@ -13,30 +13,22 @@
 extern int errno;
 #define MSGPERM 0600
 
-int msgqid_rcv, msgqid_snd, rc;
-int done;
-time_t _ltime;
-
-struct q_type {
-    long mtype;
-    int  client_kennung, genauigkeit, dividend, divisor;
-}rcv;
-
-struct q_rcv {
-    long mtype;
-    double  test;
-}snd;
-
 int main(int argc,char **argv)
-{
-    //msgqid=msgget(IPC_PRIVATE,MSGPERM|IPC_CREAT|IPC_EXCL);
-    /* create message queue, abort if message queue with the same key exists */
-    /*if (msgqid < 0) {
-        perror( strerror(errno) );
-        printf("msgget failed, msgqid = %d\n", msgqid);
-        exit(1);
-    }*/
-    ///Create
+{ 
+    //Variablendefinitionen  
+    int msgqid_rcv, msgqid_snd, rc;
+
+    struct q_rcv {
+        long mtype;
+        int  client_kennung, genauigkeit, dividend, divisor;
+    }rcv;
+    
+    struct q_snd {
+        long mtype;
+        double  test;
+    }snd;
+
+    //Create Recive
     msgqid_rcv = msgget(1, IPC_PRIVATE | IPC_CREAT | MSGPERM);
     if (msgqid_rcv < 0) {
         perror( strerror(errno) );
@@ -45,16 +37,18 @@ int main(int argc,char **argv)
     }
     printf("message queue %d created\n",msgqid_rcv);
 
-    for(;;) ///Recive
+    for(;;)
     {
+        //Recive
         rc=msgrcv(msgqid_rcv,&rcv,sizeof(rcv) - sizeof(long),0,0);
         if (rc < 0) {
             perror( strerror(errno) );
             printf("msgrcv failed, rc=%d\n", rc);
             exit(1);
-        } 
+        }
 
-        if(rcv.mtype == 1000) ///Beenden
+        //Beenden Recive
+        if(rcv.mtype == 1000)
         {
             rc=msgctl(msgqid_rcv,IPC_RMID,NULL);
             if (rc < 0) {
@@ -66,8 +60,8 @@ int main(int argc,char **argv)
             exit(0);
         }
         printf("received msg: %d/%d, %d, %ld\n", rcv.dividend,rcv.divisor,rcv.genauigkeit, rcv.mtype); 
-    /***********************************/ //TODO
-        ///Open
+
+        //Open Send
         msgqid_snd = msgget(rcv.mtype, IPC_PRIVATE | MSGPERM);
 
         if (msgqid_snd < 0) {
@@ -77,10 +71,11 @@ int main(int argc,char **argv)
         }
         printf("message queue %d opened\n",msgqid_snd);
 
+        //Berechenen
         snd.test = (double)rcv.dividend/(double)rcv.divisor;
         snd.mtype = 1;
 
-        ///Send
+        //Send
         rc = msgsnd(msgqid_snd, &snd, sizeof(snd) - sizeof(long), 0);
         if (rc < 0) {
             perror( strerror(errno) );
