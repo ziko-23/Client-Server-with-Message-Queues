@@ -6,6 +6,3 @@ mqdivser: mqdivser.c
 
 mqdivcli: mqdivcli.c
 	gcc -o mqdivcli mqdivcli.c
-
-test: test.c
-	gcc -o test test.c

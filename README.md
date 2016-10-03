@@ -1,3 +1,3 @@
 # Aufgabe:8 Client Server mit Message Queues
-Autor: Alex Leidwein, Felix Eilmere
+Autor: Alex Leidwein, Felix Eilmer
 
