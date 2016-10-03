@@ -22,7 +22,7 @@ int main(int argc,char **argv)
         long mtype;
         int  client_kennung, genauigkeit, dividend, divisor;
     }rcv;
-    
+
     struct q_snd {
         long mtype;
         double  test;
@@ -46,6 +46,7 @@ int main(int argc,char **argv)
             printf("msgrcv failed, rc=%d\n", rc);
             exit(1);
         }
+        printf("received msg: %d/%d, %d, %ld\n", rcv.dividend,rcv.divisor,rcv.genauigkeit, rcv.mtype); 
 
         //Beenden Recive
         if(rcv.mtype == 1000)
@@ -57,10 +58,10 @@ int main(int argc,char **argv)
                 exit(1);
             }
             printf("message queue %d is gone\n",msgqid_rcv);
+
             exit(0);
         }
-        printf("received msg: %d/%d, %d, %ld\n", rcv.dividend,rcv.divisor,rcv.genauigkeit, rcv.mtype); 
-
+        
         //Open Send
         msgqid_snd = msgget(rcv.mtype, IPC_PRIVATE | MSGPERM);
 
