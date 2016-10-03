@@ -1,26 +1,11 @@
-#IDIR =../include
-CC=gcc
-#CFLAGS=-I$(IDIR)
+#all: mqdivser.c mqdivcli.c
+#	gcc -o mqdivser mqdivcli mqdivser.c mqdivcli.c
+	
+mqdivser: mqdivser.c
+	gcc -o mqdivser mqdivser.c
 
-ODIR=obj
-LDIR =../lib
+mqdivcli: mqdivcli.c
+	gcc -o mqdivcli mqdivcli.c
 
-LIBS=-lm
-
-#_DEPS = hellomake.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
-
-_OBJ = mqdivcli.o mqdivser.o 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
-
-$(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-mqdivmake: $(OBJ)
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
-
-.PHONY: clean
-
-clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+test: test.c
+	gcc -o test test.c
