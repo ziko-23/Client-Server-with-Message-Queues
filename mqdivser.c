@@ -11,7 +11,7 @@
 #include <math.h>
      
 extern int errno;
-#define MSGPERM 0600
+#define MSGPERM 0666
 
 int main(int argc,char **argv)
 { 

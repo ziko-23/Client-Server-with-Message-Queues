@@ -12,7 +12,7 @@
 #include <sys/errno.h>
      
 extern int errno;
-#define MSGPERM 0600
+#define MSGPERM 0666
 
 int main(int argc,char **argv)
 {
@@ -71,13 +71,15 @@ int main(int argc,char **argv)
 
       switch(pid)
       {
-      case -1:
+      case -1: //Error
         perror( strerror(errno) );
         printf("[C] fork failed, pid = %d\n", pid);
         exit(1);
 
-      case 0:
+      case 0: //Parent
+      
         sleep(1);
+
         printf("[C] retry to open message queue\n");
         msgqid_snd = msgget(1, IPC_PRIVATE | MSGPERM);
         if (msgqid_snd < 0) {
@@ -87,10 +89,8 @@ int main(int argc,char **argv)
         }
         break;
 
-      default:
-        //printf("[C] Starting mqdivse, pid = %d\n", pid);
-
-          printf("[C] PID = %d", getpid());
+      default: //Child
+          printf("[C] starting server with PID = %d", getpid());
           execl("./mqdivser", "./mqdivser", NULL);
           exit(1);
 
