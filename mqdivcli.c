@@ -35,40 +35,39 @@ int main(int argc,char **argv)
     {
       for (i = 1; i < argc; i++)
 	    { 
-	      switch(argv[i][1])
+        if (argv[i][0] == '-' & argv[i][2] == '\0')
         {
-          case 'g':  //Genauigkeit
-            i++;
-            snd.genauigkeit = atoi(argv[i]);
-            break;
-            
-          case 'd':  //Divident
-            i++;
-            snd.dividend = atoi(argv[i]);
-            break;
+          switch(argv[i][1])
+          {
+            case 'g':  //Genauigkeit
+              i++;
+              snd.genauigkeit = atoi(argv[i]);
+              break;
+              
+            case 'd':  //Divident
+              i++;
+              snd.dividend = atoi(argv[i]);
+              break;
 
-          case 's':  //Divisor
-            i++;
-            snd.divisor = atoi(argv[i]);
-            break;
+            case 's':  //Divisor
+              i++;
+              snd.divisor = atoi(argv[i]);
+              break;
 
-          case 't':  //Type
-            i++;
-            snd.mtype = atoi(argv[i]);
-            break;  
-        }
-	    }
-    }
+            case 't':  //Type
+              i++;
+              snd.mtype = atoi(argv[i]);
+              break;  
+    } } } }
 
     //Open Send
     msgqid_snd = msgget(1, IPC_PRIVATE | MSGPERM);
-    if (msgqid_snd < 0) {
-      perror( strerror(errno) );
+    if (msgqid_snd < 0) 
+    {
       printf("[C] msgget failed, msgqid_snd = %d\n", msgqid_snd);
 
-
       //Starte server wenn mque nicht erreichbar (NOT WORKING)
-      /*pid = fork();
+      pid = fork();
 
       switch(pid)
       {
@@ -80,23 +79,22 @@ int main(int argc,char **argv)
       case 0:
         sleep(1);
         printf("[C] retry to open message queue\n");
+        msgqid_snd = msgget(1, IPC_PRIVATE | MSGPERM);
         if (msgqid_snd < 0) {
           perror( strerror(errno) );
           printf("[C] msgget failed, msgqid_snd = %d\n", msgqid_snd);
           exit(1);
         }
-        exit(0);
+        break;
 
       default:
         //printf("[C] Starting mqdivse, pid = %d\n", pid);
-        execl("./", "mqdivser", NULL);
 
-        printf("test");
+          printf("[C] PID = %d", getpid());
+          execl("./mqdivser", "./mqdivser", NULL);
+          exit(1);
 
-        exit(0);
-
-      }*/
-      exit(1);
+      }
     }
     printf("[C] message queue %d opened\n",msgqid_snd);
 
@@ -142,5 +140,7 @@ int main(int argc,char **argv)
       }
       printf("[C] message queue %d is gone\n",msgqid_rcv);
     }
+
+    printf("[C] Exit\n");
     exit(0);
 }

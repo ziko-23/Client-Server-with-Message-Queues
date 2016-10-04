@@ -1,14 +1,14 @@
 /* Autor: Alex Leidwein */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<time.h>
-#include<sys/ipc.h>
-#include<sys/msg.h>
-#include<sys/wait.h>
-#include<sys/errno.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <sys/wait.h>
+#include <sys/errno.h>
+#include <math.h>
      
 extern int errno;
 #define MSGPERM 0600
@@ -59,7 +59,7 @@ int main(int argc,char **argv)
             }
             printf("[S] message queue %d is gone\n",msgqid_rcv);
 
-            exit(0);
+            break;
         }
         
         //Open Send
@@ -86,5 +86,8 @@ int main(int argc,char **argv)
         printf("[S] sent msg:\t%f\n", snd.test); 
         //printf("sent msg: %s\n", q_entry.mtext);       
     }
+
+    printf("[S] Exit\n");
+    exit(0);
 }
 
