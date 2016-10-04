@@ -1,8 +1,16 @@
-#all: mqdivser.c mqdivcli.c
-#	gcc -o mqdivser mqdivcli mqdivser.c mqdivcli.c
-	
+#Autor: Alex Leidwein
+CC = /usr/bin/gcc
+SRC = mqdivser.c mqdivcli.c
+BIN = $(SRC:%.c=%.out)
+
+all: mqdivser mqdivcli
+		
 mqdivser: mqdivser.c
-	gcc -o mqdivser mqdivser.c
+	gcc mqdivser.c -o mqdivser.out
 
 mqdivcli: mqdivcli.c
-	gcc -o mqdivcli mqdivcli.c
+	gcc mqdivcli.c -o mqdivcli.out
+
+.PHONY: clean
+clean:
+	rm -rf $(BIN)
