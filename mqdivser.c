@@ -1,4 +1,4 @@
-/* Autor: Alex Leidwein */
+ /* Autor: Alex Leidwein */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +16,8 @@ extern int errno;
 int main(int argc,char **argv)
 { 
     //Variablendefinitionen  
-    int msgqid_rcv, msgqid_snd, rc;
+    int msgqid_rcv, msgqid_snd, rc, i, pot = 1, zwergint;
+    double diverg;
 
     struct q_rcv {
         long mtype;
@@ -74,8 +75,16 @@ int main(int argc,char **argv)
 
         //Berechenen
         //TODO: Genauigkeit soll eingestellt werden Können
-        snd.test = (double)rcv.dividend/(double)rcv.divisor;
+	
+        diverg = (double)rcv.dividend/(double)rcv.divisor;
         snd.mtype = 1;
+	pot = 1;	
+	for(i=0;i<rcv.genauigkeit;i++) {
+		pot *= 10;
+	}
+	zwergint = diverg*pot;
+	snd.test = zwergint;
+	snd.test /= pot;
 
         //Send
         rc = msgsnd(msgqid_snd, &snd, sizeof(snd) - sizeof(long), 0);
