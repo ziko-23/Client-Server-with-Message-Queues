@@ -16,8 +16,7 @@ extern int errno;
 int main(int argc,char **argv)
 { 
     //Variablendefinitionen  
-    int msgqid_rcv, msgqid_snd, rc, i, pot = 1, zwergint;
-    double diverg;
+    int msgqid_rcv, msgqid_snd, rc, i, pot = 1;
 
     struct q_rcv {
         long mtype;
@@ -73,18 +72,15 @@ int main(int argc,char **argv)
         }
         printf("[S] message queue %d opened\n",msgqid_snd);
 
-        //Berechenen
-        //TODO: Genauigkeit soll eingestellt werden Können
-	
-        diverg = (double)rcv.dividend/(double)rcv.divisor;
+        //Berechenen	
         snd.mtype = 1;
-	pot = 1;	
-	for(i=0;i<rcv.genauigkeit;i++) {
-		pot *= 10;
-	}
-	zwergint = diverg*pot;
-	snd.test = zwergint;
-	snd.test /= pot;
+        snd.test = (double)rcv.dividend/(double)rcv.divisor;
+	    pot = 1;	
+	    for(i=0;i<rcv.genauigkeit;i++) {
+		    pot *= 10;
+	    }
+	    snd.test = (int)(diverg*pot);
+	    snd.test /= pot;
 
         //Send
         rc = msgsnd(msgqid_snd, &snd, sizeof(snd) - sizeof(long), 0);
