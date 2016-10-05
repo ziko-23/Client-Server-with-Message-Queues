@@ -30,6 +30,12 @@ int main(int argc,char **argv)
       double test;
     }rcv;
 
+    //Standardwerte
+    snd.genauigkeit = 0;
+    snd.dividend = 0;
+    snd.divisor = 1;
+    snd.mtype = 0;
+
     //Argumente
     if (argc > 1)
     {
@@ -57,8 +63,20 @@ int main(int argc,char **argv)
             case 't':  //Type
               i++;
               snd.mtype = atoi(argv[i]);
+              if(snd.mtype <= 1)
+              {
+                printf("[C] invaild argument -t\n");
+                exit(1);
+              }
               break;  
-    } } } }
+    } }
+      }
+    }
+    if(snd.mtype == 0)
+    {
+      printf("[C] argument -t is required\n");
+      exit(1);
+    }
 
     //Open Send
     msgqid_snd = msgget(1, MSGPERM);
