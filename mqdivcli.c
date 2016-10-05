@@ -61,7 +61,7 @@ int main(int argc,char **argv)
     } } } }
 
     //Open Send
-    msgqid_snd = msgget(1, IPC_PRIVATE | MSGPERM);
+    msgqid_snd = msgget(1, MSGPERM);
     if (msgqid_snd < 0) 
     {
       printf("[C] msgget failed, msgqid_snd = %d\n", msgqid_snd);
@@ -81,7 +81,7 @@ int main(int argc,char **argv)
         sleep(1);
 
         printf("[C] retry to open message queue\n");
-        msgqid_snd = msgget(1, IPC_PRIVATE | MSGPERM);
+        msgqid_snd = msgget(1, MSGPERM);
         if (msgqid_snd < 0) {
           perror( strerror(errno) );
           printf("[C] msgget failed, msgqid_snd = %d\n", msgqid_snd);
@@ -91,7 +91,7 @@ int main(int argc,char **argv)
 
       default: //Child
           printf("[C] starting server with PID = %d", getpid());
-          execl("./mqdivser", "./mqdivser", NULL);
+          execl("./mqdivser.out", "./mqdivser.out", NULL);
           exit(1);
 
       }
@@ -101,7 +101,7 @@ int main(int argc,char **argv)
     //Create Recive
     if(snd.mtype != 1000)
     {
-      msgqid_rcv = msgget(snd.mtype, IPC_PRIVATE | IPC_CREAT | MSGPERM);
+      msgqid_rcv = msgget(snd.mtype, IPC_CREAT | MSGPERM);
       if (msgqid_rcv < 0) {
         perror( strerror(errno) );
         printf("[C] msgget failed, msgqid_rcv = %d\n", msgqid_rcv);

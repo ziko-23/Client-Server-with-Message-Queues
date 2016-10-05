@@ -11,7 +11,7 @@
 #include <math.h>
      
 extern int errno;
-#define MSGPERM 0666
+#define MSGPERM 0600
 
 int main(int argc,char **argv)
 { 
@@ -29,7 +29,7 @@ int main(int argc,char **argv)
     }snd;
 
     //Create Recive
-    msgqid_rcv = msgget(1, IPC_PRIVATE | IPC_CREAT | MSGPERM);
+    msgqid_rcv = msgget(1, IPC_CREAT | MSGPERM);
     if (msgqid_rcv < 0) {
         perror( strerror(errno) );
         printf("[S] msgget failed, msgqid_rcv = %d\n", msgqid_rcv);
@@ -63,7 +63,7 @@ int main(int argc,char **argv)
         }
         
         //Open Send
-        msgqid_snd = msgget(rcv.mtype, IPC_PRIVATE | MSGPERM);
+        msgqid_snd = msgget(rcv.mtype, MSGPERM);
 
         if (msgqid_snd < 0) {
             perror( strerror(errno) );
