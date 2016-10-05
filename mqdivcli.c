@@ -135,7 +135,7 @@ int main(int argc,char **argv)
       printf("[C] msgsnd failed, rc = %d\n", rc);
       exit(1);
     }
-    printf("[C] sent msg: %d/%d, %d, %ld\n", snd.dividend,snd.divisor,snd.genauigkeit,snd.mtype); 
+    printf("[C] sent msg:     %ld: %d/%d, %d\n", snd.mtype, snd.dividend, snd.divisor, snd.genauigkeit); 
 
 
     if(snd.mtype != 1000)
@@ -147,7 +147,7 @@ int main(int argc,char **argv)
         printf("[C] msgrcv failed, rc=%d\n", rc);
         exit(1);
       } 
-      printf("[C] received msg:\t%f\n", rcv.test);
+      printf("[C] received msg: %f\n", rcv.test);
 
       //Beenden Recive
       rc=msgctl(msgqid_rcv,IPC_RMID,NULL);

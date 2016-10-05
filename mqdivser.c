@@ -46,7 +46,7 @@ int main(int argc,char **argv)
             printf("[S] msgrcv failed, rc=%d\n", rc);
             exit(1);
         }
-        printf("[S] received msg: %d/%d, %d, %ld\n", rcv.dividend,rcv.divisor,rcv.genauigkeit, rcv.mtype); 
+        printf("[S] received msg: %ld: %d/%d, %d\n", rcv.mtype, rcv.dividend,rcv.divisor,rcv.genauigkeit); 
 
         //Beenden Recive
         if(rcv.mtype == 1000)
@@ -84,7 +84,7 @@ int main(int argc,char **argv)
             printf("[S] msgsnd failed, rc = %d\n", rc);
             exit(1);
         }
-        printf("[S] sent msg:\t%f\n", snd.test); 
+        printf("[S] sent msg:     %f\n", snd.test); 
         //printf("sent msg: %s\n", q_entry.mtext);       
     }
 
