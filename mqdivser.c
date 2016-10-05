@@ -73,6 +73,7 @@ int main(int argc,char **argv)
         printf("[S] message queue %d opened\n",msgqid_snd);
 
         //Berechenen
+        //TODO: Genauigkeit soll eingestellt werden Können
         snd.test = (double)rcv.dividend/(double)rcv.divisor;
         snd.mtype = 1;
 
