@@ -14,7 +14,6 @@
 #include <sys/msg.h>
 #include <sys/wait.h>
 #include <sys/errno.h>
-#include <math.h>
      
 extern int errno;
 
