@@ -91,7 +91,7 @@ int main()
 	    for(i=0;i<rcv.genauigkeit;i++) {
 		    pot *= 10;
 	    }
-	    snd.test = (int)(diverg*pot);   //"Schiebe" Werte mit 10^(genauigkeit) nach links. Typecast int um Kommastellen abzuschneiden
+	    snd.test = (int)(snd.test*pot);   //"Schiebe" Werte mit 10^(genauigkeit) nach links. Typecast int um Kommastellen abzuschneiden
 	    snd.test /= pot;    //Dividiere durch 10^(genauigkeit) um Originalwert mit Eingestellter Genauigkeit herzustellen
 
         //Send
